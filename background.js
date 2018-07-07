@@ -55,12 +55,12 @@ if(!underBarList){
 
 // Table TR Format
 const imageFormat = '<tr><td><img src="{{src}}" /></td><td><button src="{{src}}" class="addBtn">Add</button></td><td><button src="{{src}}" class="delBtn">Del</button></td></tr>';
-const htmlFormat = '<tr><td>{{src}}</td><td><button src="{{src}}" class="addBtn">Add</button></td><td><button src="{{src}}" class="delBtn">Del</button></td></tr>';
+const htmlFormat = '<tr><td>{{src}}</td><td><button src="{{src}}" class="addBtn">Add</button></td><td><button src="{{src}}" class="delBtn">Del</button></td></tr>'
 
 // Get Table Element
 let eleTable = document.getElementById('underlist');
 
-// Add Underline TR
+// Insert Underline TR
 underBarList.forEach(v =>{
   if(v.indexOf('http://') > -1 || v.indexOf('https://') > -1){
     eleTable.insertAdjacentHTML('beforeend', imageFormat.replace(/{{src}}/g, v));
@@ -69,32 +69,31 @@ underBarList.forEach(v =>{
   }
 });
 
-// Steem Condense Site List
+// Steem Condenser Site List
 const sites = [
   {
     site:"steemit.com/",
-    script:"javascript:function a(){let area=document.getElementsByClassName('smi-gif-picker-textarea')[0];area.blur(); area.value=area.value + '![]({{src}})'; area.focus();}a();"
+    textareaSelector:"document.getElementsByClassName('upload-enabled')[0]"
   },
   {
     site:"steemkr.com/",
-    script:"javascript:function a(){let area=document.getElementsByName('body')[0];area.blur(); area.value=area.value + '![]({{src}})'; area.focus();}a();"
+    textareaSelector:"document.getElementsByName('body')[0]"
   },
   {
     site:"busy.org/",
-    script:"javascript:function a(){let area=document.getElementById('body');area.blur(); area.value=area.value + '![]({{src}})'; area.focus();}a();"
+    textareaSelector:"document.getElementById('body')"
   }
 ];
 
-// Get Site Info
-let siteScript = '';
-let currUrl = '';
+// Site Textarea Selector
+let siteSelector = '';
 
+// Set Textarea Selector
 chrome.tabs.getSelected(null,function(tab) {
-  // Get Site Info
-  currUrl = tab.url;
-
   sites.forEach(v => {
-    if(currUrl.indexOf(v.site) > -1) siteScript = v.script;
+    if(tab.url.indexOf(v.site) > -1) {
+      siteSelector = v.textareaSelector;
+    }
   });
 });
 
@@ -115,8 +114,12 @@ document.getElementById('initialSetting').addEventListener('click', v =>{
 
 // Add Button Click Event
 function addClick(e) {
-  chrome.tabs.executeScript(null,
-      {code:siteScript.replace(/{{src}}/g, e.target.getAttribute('src'))});
+  let isImage = e.target.getAttribute('src').indexOf('http://') > -1 || e.target.getAttribute('src').indexOf('https://') > -1 ? true : false;
+  let script = isImage ? '![](' + e.target.getAttribute('src') + ')' : e.target.getAttribute('src');
+
+  const defaultScript = "javascript:function a(){let area={{textarea}};area.blur(); area.value=area.value + '{{src}}'; area.focus();}a();";
+
+  chrome.tabs.executeScript(null, {code:defaultScript.replace(/{{textarea}}/g, siteSelector).replace(/{{src}}/g, script)});
   window.close();
 }
 
