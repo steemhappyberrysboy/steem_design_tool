@@ -46,7 +46,7 @@
 
   table{
       border:2px solid #53637D;
-      width:600px;
+      width:630px;
   }
 
   tr{
@@ -63,9 +63,22 @@
 
   table th{
       font-size:1rem;
+      background-color:#999;
+  }
+
+  table td{
+      word-break:break-all;
   }
 
   img{
       width:100%;
       max-height:200px;
+  }
+
+  #underlist .trName{
+      width:100px;
+  }
+
+  #underlist .trView{
+      width:400px;
   }

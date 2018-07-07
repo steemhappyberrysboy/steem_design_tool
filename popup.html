@@ -7,12 +7,20 @@
         <center><h1>Steem Markdown Design Tool</h1></center>
         <table>
             <tr>
-                <td><input style="width:450px" type="text" id="manualSrc" placeholder="Input Your Src" /></td>
+                <td><input style="width:100px" type="text" id="srcName" placeholder="Input Name" /></td>
+                <td><input style="width:350px" type="text" id="manualSrc" placeholder="Input Your Src" /></td>
+                <td><input style="width:30px" type="checkbox" id="isImage">Image</td>
                 <td><button id="addManualSrc">Add</button></td>
                 <td><button id="initialSetting">Init</button></td>
             </tr>
         </table>
         <table id="underlist">
+            <tr>
+                <th>Name</th>
+                <th>Source</th>
+                <th>Add</th>
+                <th>Del</th>
+            </tr>
         </table>
     </body>
     <link href="style.css" rel="stylesheet">

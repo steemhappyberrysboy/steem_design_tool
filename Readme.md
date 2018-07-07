@@ -45,3 +45,6 @@ Email : steemhappyberrysboy@gmail.com
 
 #### GitHub Account
 https://github.com/steemhappyberrysboy
+
+### License
+MIT
