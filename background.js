@@ -54,29 +54,34 @@ if(!underBarList){
 }
 
 // Table TR Format
-const trFormat = '<tr><td><img src="{{src}}" /></td><td><button src="{{src}}" class="addBtn">Add</button></td><td><button src="{{src}}" class="delBtn">Del</button></td></tr>';
+const imageFormat = '<tr><td><img src="{{src}}" /></td><td><button src="{{src}}" class="addBtn">Add</button></td><td><button src="{{src}}" class="delBtn">Del</button></td></tr>';
+const htmlFormat = '<tr><td>{{src}}</td><td><button src="{{src}}" class="addBtn">Add</button></td><td><button src="{{src}}" class="delBtn">Del</button></td></tr>';
 
 // Get Table Element
 let eleTable = document.getElementById('underlist');
 
 // Add Underline TR
 underBarList.forEach(v =>{
-  eleTable.insertAdjacentHTML('beforeend', trFormat.replace(/{{src}}/g, v));
+  if(v.indexOf('http://') > -1 || v.indexOf('https://') > -1){
+    eleTable.insertAdjacentHTML('beforeend', imageFormat.replace(/{{src}}/g, v));
+  }else{
+    eleTable.insertAdjacentHTML('beforeend', htmlFormat.replace(/{{src}}/g, v));
+  }
 });
 
 // Steem Condense Site List
 const sites = [
   {
     site:"steemit.com/",
-    script:"javascript:function a(){let area=document.getElementsByClassName('smi-gif-picker-textarea')[0];area.blur(); area.value=area.value + '{{src}}<br>'; area.focus();}a();"
+    script:"javascript:function a(){let area=document.getElementsByClassName('smi-gif-picker-textarea')[0];area.blur(); area.value=area.value + '![]({{src}})'; area.focus();}a();"
   },
   {
     site:"steemkr.com/",
-    script:"javascript:function a(){let area=document.getElementsByName('body')[0];area.blur(); area.value=area.value + '{{src}}<br>'; area.focus();}a();"
+    script:"javascript:function a(){let area=document.getElementsByName('body')[0];area.blur(); area.value=area.value + '![]({{src}})'; area.focus();}a();"
   },
   {
     site:"busy.org/",
-    script:"javascript:function a(){let area=document.getElementById('body');area.blur(); area.value=area.value + '{{src}}<br>'; area.focus();}a();"
+    script:"javascript:function a(){let area=document.getElementById('body');area.blur(); area.value=area.value + '![]({{src}})'; area.focus();}a();"
   }
 ];
 
