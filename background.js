@@ -1,3 +1,4 @@
+// ================== Image/HTML Manager ==================
 // Default Underline List
 const defaultUnderBarList = [
   'https://ipfs.busy.org/ipfs/QmUKxtLW5JEnqaaAnwiLc9kFK1BqpcMGoFKTF7JLKcvJqy',
@@ -73,25 +74,30 @@ underBarList.forEach(v =>{
 const sites = [
   {
     site:"steemit.com/",
+    context:"https://steemit.com/",
     textareaSelector:"document.getElementsByClassName('upload-enabled')[0]"
   },
   {
     site:"steemkr.com/",
+    context:"https://steemkr.com/",
     textareaSelector:"document.getElementsByName('body')[0]"
   },
   {
     site:"busy.org/",
+    context:"https://busy.org/",
     textareaSelector:"document.getElementById('body')"
   }
 ];
 
 // Site Textarea Selector
 let siteSelector = '';
+let currContext = '';
 
 // Set Textarea Selector
 chrome.tabs.getSelected(null,function(tab) {
   sites.forEach(v => {
     if(tab.url.indexOf(v.site) > -1) {
+      currContext = v.context;
       siteSelector = v.textareaSelector;
     }
   });
@@ -132,12 +138,98 @@ function delClick(e) {
   e.target.closest('tr').remove();
 }
 
+
+// ================== Bookmark Function ==========================
+let userBookmarkList = [];
+userBookmarkList = JSON.parse(localStorage.getItem('userBookmarkList'));
+
+if(userBookmarkList == null){
+  userBookmarkList = [];
+}
+
+// Get Table Element
+let bookmarkTable = document.getElementById('bookmarkList');
+
+// Bookmark TR Format
+const bookmarkTrFormat = '<button class="bookmark">{{id}}</div>';
+
+// Insert Underline TR
+userBookmarkList.forEach(v =>{
+  bookmarkTable.insertAdjacentHTML('beforeend', bookmarkTrFormat.replace(/{{id}}/g, v));
+});
+
+// Add At Sign Function
+function addAtSign(str){
+  if(str && str.length > 0 && str.substr(0, 1) != "@") return "@" + str;
+}
+
+// Add User Button Click Event
+document.getElementById('addUserBookmark').addEventListener('click', addUserBookmark);
+
+// Remove User Button Click Event
+document.getElementById('removeUserBookmark').addEventListener('click', v => {
+  let tmp = addAtSign(document.getElementById('userID').value);
+  let index = userBookmarkList.indexOf(tmp);
+  userBookmarkList.splice(index, 1);
+
+  let bookmarkBtns = document.getElementsByClassName('bookmark');
+  for(let i=0; i<bookmarkBtns.length; i++){
+    if(bookmarkBtns[i].innerHTML == tmp){
+      bookmarkBtns[i].remove();
+      break;
+    }
+  }
+
+  document.getElementById('userID').value = '';
+  document.getElementById('userID').focus();
+});
+
+// Add User Bookmark Function
+function addUserBookmark(){
+  let tmp = addAtSign(document.getElementById('userID').value);
+
+  if(userBookmarkList.indexOf(tmp) > -1){
+    alert('Already Exist!!');
+    document.getElementById('userID').focus();
+    return;
+  } 
+
+  userBookmarkList.push(tmp);
+  localStorage.setItem('userBookmarkList', JSON.stringify(userBookmarkList));
+
+  bookmarkTable.insertAdjacentHTML('beforeend', bookmarkTrFormat.replace(/{{id}}/g, tmp));
+  document.getElementById('userID').value = '';
+
+  let bookmarkBtns = document.getElementsByClassName('bookmark');
+  bookmarkBtns[bookmarkBtns.length - 1].addEventListener('click', goUserPageClick);
+}
+
+// Add Enter Keypress Event
+document.getElementById('userID').addEventListener('keypress', (v, e) =>{
+  if(v.keyCode == 13){
+    addUserBookmark();
+  }
+});
+
+// Go Target User Page
+function goUserPageClick(e){
+  let userId = e.target.innerHTML;
+  chrome.tabs.executeScript(null, {code:'location.href="' + currContext + userId + '"'});
+  window.close();
+}
+
+// ================== Add Event ==================
 // Add EventListener
 document.addEventListener('DOMContentLoaded', function () {
   let addBtns = document.getElementsByClassName('addBtn');
   let delBtns = document.getElementsByClassName('delBtn');
-  for (var i = 0; i < addBtns.length; i++) {
+  for (let i = 0; i < addBtns.length; i++) {
     addBtns[i].addEventListener('click', addClick);
     delBtns[i].addEventListener('click', delClick);
+  }
+
+  let bookmarkBtns = document.getElementsByClassName('bookmark');
+  for(let i=0; i<bookmarkBtns.length; i++){
+    bookmarkBtns[i].addEventListener('click', goUserPageClick);
   }
 });

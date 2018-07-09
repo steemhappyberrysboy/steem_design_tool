@@ -4,7 +4,18 @@
         <title>Steem Markdown Design Tool</title>
     </head>
     <body>
-        <center><h1>Steem Markdown Design Tool</h1></center>
+        <center><h1>Steem Tool</h1></center>
+        <h3>User</h3>
+
+        <table>
+            <tr>
+                <td style="width:67%;"><input type="text" id="userID" placeholder="Input User @ID" /></td>
+                <td><button id="addUserBookmark">Add User</button></td>
+                <td><button id="removeUserBookmark">Remove User</button></td>
+            </tr>
+        </table>
+        <table id="bookmarkList"></table>
+        <h3>Image/HTML</h3>
         <table>
             <tr>
                 <td><input style="width:450px" type="text" id="manualSrc" placeholder="Input Your Src" /></td>
@@ -12,8 +23,7 @@
                 <td><button id="initialSetting">Init</button></td>
             </tr>
         </table>
-        <table id="underlist">
-        </table>
+        <table id="underlist"></table>
     </body>
     <link href="style.css" rel="stylesheet">
     <script src="background.js"></script>
