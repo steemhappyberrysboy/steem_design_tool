@@ -161,6 +161,7 @@ userBookmarkList.forEach(v =>{
 // Add At Sign Function
 function addAtSign(str){
   if(str && str.length > 0 && str.substr(0, 1) != "@") return "@" + str;
+  else return str;
 }
 
 // Add User Button Click Event
