@@ -10,7 +10,7 @@ class Source {
     return this.name;
   }
   getHtmlSrc(){
-    return this.isImage ? '<img src="' + this.src + '" />' : this.src;
+    return this.isImage ? '<img style="margin-top:10px;" src="' + this.src + '" />' : this.src;
   }
   getSrc(){
     return this.src;
@@ -86,9 +86,16 @@ if(getLocalItems.length > 0){
   underBarList = defaultUnderBarList;
   localStorage.setItem('underBarList', JSON.stringify(underBarList));
 }
-
+// {/*<td><button src="{{src}}" class="addBtn">Add</button></td><td><button src="{{src}}" class="delBtn">Del</button></td>*/}
+// <div class="ui pointing below label">
+//       Please enter a value
+//     </div>
 // Table TR Format
-const trFormat = '<tr><td class="trName">{{name}}</td><td class="trView">{{view}}</td><td><button src="{{src}}" class="addBtn">Add</button></td><td><button src="{{src}}" class="delBtn">Del</button></td></tr>';
+let trFormat = '<tr><td class="trName"><div style="font-size:1.5rem;float:left;">{{name}}</div>';
+trFormat += '<div style="float:right;" class="ui circular medium orange icon button delBtn" src="{{src}}"><i class="icon trash alternate outline"></i></div>';
+trFormat += '<div style="float:right;" class="ui circular medium green icon button addBtn" src="{{src}}"><i class="icon copy outline"></i></div>';
+trFormat += '</td>';
+trFormat += '<td class="trView">{{view}}</td></tr>';
 
 // Get Table Element
 let eleTable = document.getElementById('underlist');
@@ -98,12 +105,6 @@ underBarList.forEach(v =>{
   eleTable.insertAdjacentHTML('beforeend', trFormat.replace(/{{name}}/g, v.getName())
                                                     .replace(/{{view}}/g, v.getHtmlSrc())
                                                     .replace(/{{src}}/g, v.getSrc()));
-  
-  // if(v.src.indexOf('http://') > -1 || v.src.indexOf('https://') > -1){
-  //   eleTable.insertAdjacentHTML('beforeend', imageFormat.replace(/{{src}}/g, v));
-  // }else{
-  //   eleTable.insertAdjacentHTML('beforeend', htmlFormat.replace(/{{src}}/g, v));
-  // }
 });
 
 // Steem Condenser Site List
@@ -159,8 +160,9 @@ document.getElementById('initialSetting').addEventListener('click', v =>{
 
 // Add Button Click Event
 function addClick(e) {
-  let isImage = e.target.getAttribute('src').indexOf('http://') > -1 || e.target.getAttribute('src').indexOf('https://') > -1 ? true : false;
-  let script = isImage ? '![](' + e.target.getAttribute('src') + ')' : e.target.getAttribute('src');
+  let src = e.target.parentElement.getAttribute('src');
+  let isImage = src.indexOf('http://') > -1 || src.indexOf('https://') > -1 ? true : false;
+  let script = isImage ? '![](' + src + ')' : src;
 
   const defaultScript = "javascript:function a(){let area={{textarea}};area.blur(); area.value=area.value + '{{src}}'; area.focus();}a();";
 
@@ -170,7 +172,8 @@ function addClick(e) {
 
 // Delete Button Click Event
 function delClick(e) {
-  let delSrc = e.target.getAttribute('src');
+  // let delSrc = e.target.getAttribute('src');
+  let delSrc = e.target.parentElement.getAttribute('src');
   let index = -1;
 
   for(let i=0; i<underBarList.length; i++){
@@ -199,12 +202,12 @@ if(userBookmarkList == null){
 // Get Table Element
 let bookmarkTable = document.getElementById('bookmarkList');
 
-// Bookmark TR Format
-const bookmarkTrFormat = '<button class="bookmark">{{id}}</div>';
+// Bookmark Format
+const bookmarkFormat = '<div style="margin:5px;" class="ui small teal basic button bookmark">{{id}}</div>';
 
 // Insert Underline TR
 userBookmarkList.forEach(v =>{
-  bookmarkTable.insertAdjacentHTML('beforeend', bookmarkTrFormat.replace(/{{id}}/g, v));
+  bookmarkTable.insertAdjacentHTML('beforeend', bookmarkFormat.replace(/{{id}}/g, v));
 });
 
 // Add At Sign Function
@@ -246,7 +249,7 @@ function addUserBookmark(){
   userBookmarkList.push(tmp);
   localStorage.setItem('userBookmarkList', JSON.stringify(userBookmarkList));
 
-  bookmarkTable.insertAdjacentHTML('beforeend', bookmarkTrFormat.replace(/{{id}}/g, tmp));
+  bookmarkTable.insertAdjacentHTML('beforeend', bookmarkFormat.replace(/{{id}}/g, tmp));
   document.getElementById('userID').value = '';
 
   let bookmarkBtns = document.getElementsByClassName('bookmark');
