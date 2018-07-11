@@ -1,5 +1,32 @@
+// Global Vars
+const STORAGE_IMAGE_LIST = 'underBarList';      // localstorage imagelist key
+const STORAGE_USER_LIST = 'userShortcutList';   // localstorage user Shortcut key
+
+// Steem Condensor Site List
+const sites = [
+  {
+    site:"steemit.com/",
+    context:"https://steemit.com/",
+    textareaSelector:"document.getElementsByClassName('upload-enabled')[0]"
+  },
+  {
+    site:"steemkr.com/",
+    context:"https://steemkr.com/",
+    textareaSelector:"document.getElementsByName('body')[0]"
+  },
+  {
+    site:"busy.org/",
+    context:"https://busy.org/",
+    textareaSelector:"document.getElementById('body')"
+  }
+];
+
+
 // ================== Image/HTML Manager ==================
-// Source Class
+
+/**
+* Source Class
+*/
 class Source {
   constructor(name, isImage, src) {
     this.name = name;
@@ -21,14 +48,12 @@ class Source {
     this.isImage = obj.isImage;
     this.src = obj.src;
   }
-  // get isSameSrc(tmpSrc){
-  //   return this.src == tmpSrc ? true : false;
-  // }
 }
 
-// Default Image List(for Init)
-
-const defaultUnderBarList = [
+/**
+* Default Image List(for Init)
+*/
+const defaultSrcList = [
   new Source('Underbar1', true, 'https://ipfs.busy.org/ipfs/QmUKxtLW5JEnqaaAnwiLc9kFK1BqpcMGoFKTF7JLKcvJqy'),
   new Source('Underbar2', true, 'https://steemitimages.com/DQmWMwkX7hHM6cgtdgzbBWyDonN7jPfLzwdj6sH7xfRJnU5/%EA%B5%AC%EB%B6%84%EC%84%A0_%EB%B3%84.png'),
   new Source('Underbar3', true, 'https://steemitimages.com/DQmT13qHqTU2Ra6MC8ucFrePXPqF21kQzkr72kedVoxRJLN/%EA%B5%AC%EB%B6%84%EC%84%A0_%EC%9B%94%EA%B3%84%EA%B4%80.png'),
@@ -72,65 +97,53 @@ const defaultUnderBarList = [
   new Source('Underbar41', true, 'https://cdn.steemitimages.com/DQmbPovzN6cdnS1Yu5hUV258DRg42rSLVWsL5YGm4SuHAuJ/%EA%B5%AC%EB%B6%84%EC%84%A0_%EC%A7%A7%EC%9D%80%EB%B9%88%EC%A7%81%EC%84%A0.png')
 ];
 
-// Get BarList from LocalStorage
-let underBarList = [];
-let getLocalItems = localStorage.getItem('underBarList');
+// =========== onload ===================
+/**
+* Get BarList from LocalStorage
+*/
+let srcList = [];
+let getLocalItems = localStorage.getItem(STORAGE_IMAGE_LIST);
 
 if(getLocalItems.length > 0){
   let jsonList = JSON.parse(getLocalItems);
   jsonList.forEach(v => {
-    underBarList.push(new Source(v.name, v.isImage, v.src));
+    srcList.push(new Source(v.name, v.isImage, v.src));
   });
 }else{
   // Set Default UnderLine
-  underBarList = defaultUnderBarList;
-  localStorage.setItem('underBarList', JSON.stringify(underBarList));
+  srcList = defaultSrcList;
+  localStorage.setItem(STORAGE_IMAGE_LIST, JSON.stringify(srcList));
 }
-// {/*<td><button src="{{src}}" class="addBtn">Add</button></td><td><button src="{{src}}" class="delBtn">Del</button></td>*/}
-// <div class="ui pointing below label">
-//       Please enter a value
-//     </div>
-// Table TR Format
+
+/**
+* Table <TR> Format for insertAdjacentHTML
+*/
 let trFormat = '<tr><td class="trName"><div style="font-size:1.5rem;float:left;">{{name}}</div>';
-trFormat += '<div style="float:right;" class="ui circular medium orange icon button delBtn" src="{{src}}"><i class="icon trash alternate outline"></i></div>';
-trFormat += '<div style="float:right;" class="ui circular medium green icon button addBtn" src="{{src}}"><i class="icon copy outline"></i></div>';
+trFormat += '<div style="float:right;" class="ui circular medium orange icon button delBtn" name="{{name}}" src="{{src}}"><i class="icon trash alternate outline"></i></div>';
+trFormat += '<div style="float:right;" class="ui circular medium green icon button addBtn" name="{{name}}" src="{{src}}"><i class="icon copy outline"></i></div>';
 trFormat += '</td>';
 trFormat += '<td class="trView">{{view}}</td></tr>';
 
-// Get Table Element
+// Image Table Element
 let eleTable = document.getElementById('underlist');
 
-// Insert Underline TR
-underBarList.forEach(v =>{
+// Insert Image <TR> HTML
+srcList.forEach(v =>{
   eleTable.insertAdjacentHTML('beforeend', trFormat.replace(/{{name}}/g, v.getName())
                                                     .replace(/{{view}}/g, v.getHtmlSrc())
                                                     .replace(/{{src}}/g, v.getSrc()));
 });
 
-// Steem Condenser Site List
-const sites = [
-  {
-    site:"steemit.com/",
-    context:"https://steemit.com/",
-    textareaSelector:"document.getElementsByClassName('upload-enabled')[0]"
-  },
-  {
-    site:"steemkr.com/",
-    context:"https://steemkr.com/",
-    textareaSelector:"document.getElementsByName('body')[0]"
-  },
-  {
-    site:"busy.org/",
-    context:"https://busy.org/",
-    textareaSelector:"document.getElementById('body')"
-  }
-];
 
+// ============ Add Events ===================
 // Site Textarea Selector
 let siteSelector = '';
 let currContext = '';
 
-// Set Textarea Selector
+/**
+* Set Textarea Selector from chrome tabs
+* @param tab chrometab
+*/
 chrome.tabs.getSelected(null,function(tab) {
   sites.forEach(v => {
     if(tab.url.indexOf(v.site) > -1) {
@@ -140,29 +153,61 @@ chrome.tabs.getSelected(null,function(tab) {
   });
 });
 
-// Add Manual Source Button Event
+/**
+* Initial Source Button Event
+*/
+document.getElementById('initialSetting').addEventListener('click', v =>{
+  srcList = defaultSrcList;
+  localStorage.setItem(STORAGE_IMAGE_LIST, JSON.stringify(srcList));
+  window.close();
+});
+
+/**
+* Search Same Item srcList
+* @param name A  String to be found in the list
+* @return Number Item Index(Not exist return -1)
+*/
+function getItemIndex(name){
+  for(let i=0; i<srcList.length; i++){
+    if(srcList[i].getName() == name){
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+/**
+* Add Manual Source Button Event
+*/
 document.getElementById('addManualSrc').addEventListener('click', v =>{
-  let name = document.getElementById('srcName').value;
+  let name = document.getElementById('srcName').value.trim();
   let isImage = document.getElementById('isImage').checked;
   let src = document.getElementById('manualSrc').value;
 
-  underBarList.unshift(new Source(name, isImage, src));
-  localStorage.setItem('underBarList', JSON.stringify(underBarList));
+  if(!name || !src) {
+    alert('Please Input Name and Source');
+    return;
+  }
+
+  if(getItemIndex(name) > -1){
+    alert('Name already exist. Please use another name.')
+    return;
+  }
+
+  srcList.unshift(new Source(name, isImage, src));
+  localStorage.setItem(STORAGE_IMAGE_LIST, JSON.stringify(srcList));
   window.close();
 });
 
-// Initial Source Button Event
-document.getElementById('initialSetting').addEventListener('click', v =>{
-  underBarList = defaultUnderBarList;
-  localStorage.setItem('underBarList', JSON.stringify(underBarList));
-  window.close();
-});
-
-// Add Button Click Event
+/**
+* Add Button Click Event
+* @param e add button click event
+*/
 function addClick(e) {
   let src = e.target.parentElement.getAttribute('src');
-  let isImage = src.indexOf('http://') > -1 || src.indexOf('https://') > -1 ? true : false;
-  let script = isImage ? '![](' + src + ')' : src;
+  let itemIdx = getItemIndex(e.target.parentElement.getAttribute('name'));
+  let script = srcList[itemIdx].isImage ? '![](' + src + ')' : src;
 
   const defaultScript = "javascript:function a(){let area={{textarea}};area.blur(); area.value=area.value + '{{src}}'; area.focus();}a();";
 
@@ -170,64 +215,66 @@ function addClick(e) {
   window.close();
 }
 
-// Delete Button Click Event
+/**
+* Delete Button Click Event
+* @param e del button click event
+*/
 function delClick(e) {
-  // let delSrc = e.target.getAttribute('src');
-  let delSrc = e.target.parentElement.getAttribute('src');
-  let index = -1;
-
-  for(let i=0; i<underBarList.length; i++){
-    if(underBarList[i].src == delSrc){
-      index = i;
-      break;
-    }
-  }
-
+  let index = getItemIndex(e.target.parentElement.getAttribute('name'));
+  
   if(index < 0) return;
 
-  underBarList.splice(index, 1);
-  localStorage.setItem('underBarList', JSON.stringify(underBarList));
+  srcList.splice(index, 1);
+  localStorage.setItem(STORAGE_IMAGE_LIST, JSON.stringify(srcList));
   e.target.closest('tr').remove();
 }
 
 
-// ================== Bookmark Function ==========================
-let userBookmarkList = [];
-userBookmarkList = JSON.parse(localStorage.getItem('userBookmarkList'));
+// ================== User Shortcut Function ==========================
+// Shortcut List
+let userShortcutList = [];
+userShortcutList = JSON.parse(localStorage.getItem(STORAGE_USER_LIST));
 
-if(userBookmarkList == null){
-  userBookmarkList = [];
+if(!userShortcutList){
+  userShortcutList = [];
 }
 
-// Get Table Element
-let bookmarkTable = document.getElementById('bookmarkList');
+// Get Shortcut Table Element
+let shortcutTable = document.getElementById('shortcutList');
 
-// Bookmark Format
-const bookmarkFormat = '<div style="margin:5px;" class="ui small teal basic button bookmark">{{id}}</div>';
+// Shortcut <TR> Format
+const shortcutFormat = '<div style="margin:5px;" class="ui small teal basic button shortcut">{{id}}</div>';
 
-// Insert Underline TR
-userBookmarkList.forEach(v =>{
-  bookmarkTable.insertAdjacentHTML('beforeend', bookmarkFormat.replace(/{{id}}/g, v));
+// Insert Shortcut <TR> HTML into Shortcut Table
+userShortcutList.forEach(v =>{
+  shortcutTable.insertAdjacentHTML('beforeend', shortcutFormat.replace(/{{id}}/g, v));
 });
 
-// Add At Sign Function
+/**
+* Add At Sign Function
+* @param str A string for checking atsign
+* @return str string with atsign
+*/
 function addAtSign(str){
-  if(str && str.length > 0 && str.substr(0, 1) != "@") return "@" + str;
+  if(str && str.substr(0, 1) != "@") return "@" + str;
+  else return str;
 }
 
 // Add User Button Click Event
-document.getElementById('addUserBookmark').addEventListener('click', addUserBookmark);
+document.getElementById('addUserShortcut').addEventListener('click', addUserShortcut);
 
-// Remove User Button Click Event
-document.getElementById('removeUserBookmark').addEventListener('click', v => {
+/**
+* Remove User Button Click Event
+*/
+document.getElementById('removeUserShortcut').addEventListener('click', v => {
   let tmp = addAtSign(document.getElementById('userID').value);
-  let index = userBookmarkList.indexOf(tmp);
-  userBookmarkList.splice(index, 1);
+  let index = userShortcutList.indexOf(tmp);
+  userShortcutList.splice(index, 1);
 
-  let bookmarkBtns = document.getElementsByClassName('bookmark');
-  for(let i=0; i<bookmarkBtns.length; i++){
-    if(bookmarkBtns[i].innerHTML == tmp){
-      bookmarkBtns[i].remove();
+  let shortcutBtns = document.getElementsByClassName('shortcut');
+  for(let i=0; i<shortcutBtns.length; i++){
+    if(shortcutBtns[i].innerHTML == tmp){
+      shortcutBtns[i].remove();
       break;
     }
   }
@@ -236,34 +283,45 @@ document.getElementById('removeUserBookmark').addEventListener('click', v => {
   document.getElementById('userID').focus();
 });
 
-// Add User Bookmark Function
-function addUserBookmark(){
-  let tmp = addAtSign(document.getElementById('userID').value);
+/**
+* Add User Shortcut Function and Save Localstorage
+*/
+function addUserShortcut(){
+  let userid = addAtSign(document.getElementById('userID').value);
+  if(!userid) {
+    alert('Please Input Userid');
+    return;
+  }
 
-  if(userBookmarkList.indexOf(tmp) > -1){
+  if(userShortcutList.indexOf(userid) > -1){
     alert('Already Exist!!');
     document.getElementById('userID').focus();
     return;
   } 
 
-  userBookmarkList.push(tmp);
-  localStorage.setItem('userBookmarkList', JSON.stringify(userBookmarkList));
+  userShortcutList.push(userid);
+  localStorage.setItem(STORAGE_USER_LIST, JSON.stringify(userShortcutList));
 
-  bookmarkTable.insertAdjacentHTML('beforeend', bookmarkFormat.replace(/{{id}}/g, tmp));
+  shortcutTable.insertAdjacentHTML('beforeend', shortcutFormat.replace(/{{id}}/g, userid));
   document.getElementById('userID').value = '';
 
-  let bookmarkBtns = document.getElementsByClassName('bookmark');
-  bookmarkBtns[bookmarkBtns.length - 1].addEventListener('click', goUserPageClick);
+  let shortcutBtns = document.getElementsByClassName('shortcut');
+  shortcutBtns[shortcutBtns.length - 1].addEventListener('click', goUserPageClick);
 }
 
-// Add Enter Keypress Event
+/**
+* Add Enter Keypress Event
+* @param e event
+*/
 document.getElementById('userID').addEventListener('keypress', (v, e) =>{
   if(v.keyCode == 13){
-    addUserBookmark();
+    addUserShortcut();
   }
 });
 
-// Go Target User Page
+/**
+* Go Target User Page
+*/
 function goUserPageClick(e){
   let userId = e.target.innerHTML;
   chrome.tabs.executeScript(null, {code:'location.href="' + currContext + userId + '"'});
@@ -271,7 +329,9 @@ function goUserPageClick(e){
 }
 
 // ================== Add Event ==================
-// Add EventListener
+/**
+* Add EventListener
+*/
 document.addEventListener('DOMContentLoaded', function () {
   let addBtns = document.getElementsByClassName('addBtn');
   let delBtns = document.getElementsByClassName('delBtn');
@@ -280,8 +340,8 @@ document.addEventListener('DOMContentLoaded', function () {
     delBtns[i].addEventListener('click', delClick);
   }
 
-  let bookmarkBtns = document.getElementsByClassName('bookmark');
-  for(let i=0; i<bookmarkBtns.length; i++){
-    bookmarkBtns[i].addEventListener('click', goUserPageClick);
+  let shortcutBtns = document.getElementsByClassName('shortcut');
+  for(let i=0; i<shortcutBtns.length; i++){
+    shortcutBtns[i].addEventListener('click', goUserPageClick);
   }
 });
