@@ -117,10 +117,21 @@ addClick = (e) => {
   let itemIdx = getItemIndex(e.target.parentElement.getAttribute('name'));
   let script = srcList[itemIdx].isImage ? '![](' + src + ')' : src;
 
-  const defaultScript = "javascript:function a(){let area={{textarea}};area.blur(); area.value=area.value + '{{src}}'; area.focus();}a();";
+// change clipboard copy
+//   const defaultScript = "javascript:function a(){let area={{textarea}};area.blur(); area.value=area.value + '{{src}}'; area.focus();}a();";
 
-  chrome.tabs.executeScript(null, {code:defaultScript.replace(/{{textarea}}/g, siteSelector).replace(/{{src}}/g, script)});
-  window.close();
+  let clipboard = document.getElementById('clipboard');
+  clipboard.style.display = 'block';
+  clipboard.value = script;
+  clipboard.select();
+  document.execCommand('copy');
+  clipboard.style.display = 'none';
+
+  let copied = document.getElementById('copied');
+  copied.style.display = 'inline-block';
+  setTimeout((() => copied.style.display = 'none'), 1500);
+//   chrome.tabs.executeScript(null, {code:defaultScript.replace(/{{textarea}}/g, siteSelector).replace(/{{src}}/g, script)});
+//   window.close();
 }
 
 /**
