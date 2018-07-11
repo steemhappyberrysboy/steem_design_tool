@@ -1,30 +1,56 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Steem Markdown Design Tool</title>
-    </head>
-    <body>
-        <center><h1>Steem Tool</h1></center>
-        <h3>User</h3>
+<head>
+    <title>Steem Markdown Design Tool</title>
+</head>
+<body>
+    <div style="width:500px!important;" class="ui container">
+        <center><h1>Steemit Tools</h1></center>
+        <div class="ui raised segment">
+            <h3>User Shortcuts</h3>
+            
+            <div class="ui input">
+                <input type="text" id="userID" placeholder="Input User @ID" />
+            </div>
+            <div class="ui primary button" id="addUserShortcut">Add</div>
+            <div class="ui orange button" id="removeUserShortcut">Del</div>
+            
+            <table class="ui olive table" id="shortcutList"></table>
+        </div>
 
-        <table>
-            <tr>
-                <td style="width:67%;"><input type="text" id="userID" placeholder="Input User @ID" /></td>
-                <td><button id="addUserBookmark">Add User</button></td>
-                <td><button id="removeUserBookmark">Remove User</button></td>
-            </tr>
-        </table>
-        <table id="bookmarkList"></table>
-        <h3>Image/HTML</h3>
-        <table>
-            <tr>
-                <td><input style="width:450px" type="text" id="manualSrc" placeholder="Input Your Src" /></td>
-                <td><button id="addManualSrc">Add</button></td>
-                <td><button id="initialSetting">Init</button></td>
-            </tr>
-        </table>
-        <table id="underlist"></table>
-    </body>
-    <link href="style.css" rel="stylesheet">
-    <script src="background.js"></script>
+        <div class="ui divider"></div>
+        
+        <div class="ui raised segment">
+            <h3>Image/HTML Manager</h3>
+            <div class="ui form">
+                <div class="four fields">
+                    <div class="field" style="width:60%!important">
+                        <input type="text" id="srcName" placeholder="Input Name">
+                    </div>
+                    <div class="field" style="width:10%!important">
+                        <label>Image</label>
+                        <input style="width:30px" type="checkbox" id="isImage" checked>
+                    </div>
+                    <div class="field" style="width:15%!important">
+                        <div class="ui primary button" id="addManualSrc">Add</div>
+                    </div>
+                    <div class="field" style="width:15%!important">
+                        <div class="ui teal button" id="initialSetting">Init</div>
+                    </div>
+                </div>
+                <div class="field">
+                    <input type="text" id="manualSrc" placeholder="Input Your Src">
+                </div>
+            </div>
+            <div class="ui divider"></div>
+            <table class="ui olive table">
+                <tbody id="underlist">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.css">
+<link href="style.css" rel="stylesheet">
+<script src="background.js"></script>
 </html>

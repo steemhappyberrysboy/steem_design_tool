@@ -46,7 +46,7 @@
 
   table{
       border:2px solid #53637D;
-      width:600px;
+      width:630px;
   }
 
   tr{
@@ -63,6 +63,11 @@
 
   table th{
       font-size:1rem;
+      background-color:#999;
+  }
+
+  table td{
+      word-break:break-all;
   }
 
   img{
@@ -70,8 +75,16 @@
       max-height:200px;
   }
 
-  button.bookmark{
+  button.shortcut{
       height:30px;
       float:left;
       margin:2px;
+  }
+
+  #underlist .trName{
+      width:100px;
+  }
+
+  #underlist .trView{
+      width:400px;
   }
