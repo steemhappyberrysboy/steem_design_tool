@@ -90,7 +90,14 @@ document.getElementById('addManualSrc').addEventListener('click', v =>{
 
   srcList.unshift(new Source(name, isImage, src));
   localStorage.setItem(STORAGE_IMAGE_LIST, JSON.stringify(srcList));
-  window.close();
+
+  eleTable.insertAdjacentHTML('afterbegin', trFormat.replace(/{{name}}/g, srcList[0].getName())
+                                                    .replace(/{{view}}/g, srcList[0].getHtmlSrc())
+                                                    .replace(/{{src}}/g, srcList[0].getSrc())
+  );
+
+  document.getElementsByClassName('addBtn')[0].addEventListener('click', addClick);
+  document.getElementsByClassName('delBtn')[0].addEventListener('click', delClick);
 });
 
 /**
