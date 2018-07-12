@@ -6,7 +6,7 @@
 let srcList = [];
 let getLocalItems = localStorage.getItem(STORAGE_IMAGE_LIST);
 
-if(getLocalItems.length > 0){
+if(getLocalItems){
   let jsonList = JSON.parse(getLocalItems);
   jsonList.forEach((v, idx) => {
     if(v.name){
