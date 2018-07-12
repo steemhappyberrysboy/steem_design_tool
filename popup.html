@@ -4,11 +4,64 @@
     <title>Steem Markdown Design Tool</title>
 </head>
 <body>
-    <div style="width:500px!important;" class="ui container">
+    <div style="width:500px!important;min-height:500px; " class="ui container">
         <div class="ui black button" id="copied" style="display:none;position:fixed;top:10px;right:15px;z-index:999;">Copied!!</div>
 
         <center><h1>Steemit Tools</h1></center>
-        <div class="ui raised segment">
+        <br>
+
+        <div class="ui styled accordion">
+            <div id="shortcutDivTitle" class="title">
+                <i class="dropdown icon"></i>
+                User Shortcuts
+            </div>
+            <div id="shortcutDivContent" class="content">
+                <div class="ui input">
+                    <input type="text" id="userID" placeholder="Input User @ID" />
+                </div>
+                <div class="ui primary button" id="addUserShortcut">Add</div>
+                <div class="ui orange button" id="removeUserShortcut">Del</div>
+                
+                <table class="ui olive table" id="shortcutList"></table>
+            </div>
+            <div id="srcListDivTitle" class="title">
+                <i class="dropdown icon"></i>
+                Image/HTML Manager
+            </div>
+            <div id="srcListDivContent" class="content">
+                <div class="ui form">
+                    <div class="four fields">
+                        <div class="field" style="width:60%!important">
+                            <input type="text" id="srcName" placeholder="Input Name">
+                        </div>
+                        <div class="field" style="width:10%!important">
+                            <label>Image</label>
+                            <input style="width:30px" type="checkbox" id="isImage" checked>
+                        </div>
+                        <div class="field" style="width:15%!important">
+                            <div class="ui primary button" id="addManualSrc">Add</div>
+                        </div>
+                        <div class="field" style="width:15%!important">
+                            <div class="ui teal button" id="initialSetting">Init</div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="text" id="manualSrc" placeholder="Input Your Src">
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+                <table class="ui olive table">
+                    <tbody id="underlist">
+                    </tbody>
+                </table>
+                <div class="ui input">
+                    <input type="text" id="clipboard" style="display:none;" />
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <div class="ui raised segment">
             <h3>User Shortcuts</h3>
             
             <div class="ui input">
@@ -52,7 +105,7 @@
             <div class="ui input">
                 <input type="text" id="clipboard" style="display:none;" />
             </div>
-        </div>
+        </div> -->
     </div>
 </body>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.css">
