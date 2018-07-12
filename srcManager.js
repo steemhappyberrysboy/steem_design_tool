@@ -71,21 +71,6 @@ document.getElementById('initialSetting').addEventListener('click', v =>{
 });
 
 /**
-* Search Same Item srcList
-* @param name A  String to be found in the list
-* @return Number Item Index(Not exist return -1)
-*/
-getItemIndex = (name) => {
-  for(let i=0; i<srcList.length; i++){
-    if(srcList[i].getName() == name){
-      return i;
-    }
-  }
-
-  return -1;
-};
-
-/**
 * Add Manual Source Button Event
 */
 document.getElementById('addManualSrc').addEventListener('click', v =>{

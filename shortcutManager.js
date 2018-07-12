@@ -21,16 +21,6 @@ userShortcutList.forEach(v =>{
 });
 
 /**
-* Add At Sign Function
-* @param str A string for checking atsign
-* @return str string with atsign
-*/
-addAtSign = (str) => {
-  if(str && str.substr(0, 1) != "@") return "@" + str;
-  else return str;
-}
-
-/**
 * Add User Shortcut Function and Save Localstorage
 */
 addUserShortcut = () => {
@@ -98,10 +88,7 @@ goUserPageClick = (e) => {
   window.close();
 }
 
-// ================== Add Event ==================
-
-
-
+// Add Event to Shortcut Buttons
 document.addEventListener('DOMContentLoaded', () => {
   let shortcutBtns = document.getElementsByClassName('shortcut');
   for(let i=0; i<shortcutBtns.length; i++){

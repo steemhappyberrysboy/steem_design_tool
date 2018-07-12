@@ -67,4 +67,3 @@ const defaultSrcList = [
   new Source('Underbar40', true, 'https://cdn.steemitimages.com/DQmbjQAuyTQCwY8xtxMSCJhXCKGarujxuG4T9Cj43JsiK2D/%EA%B5%AC%EB%B6%84%EC%84%A0_%EB%B9%88%EC%A7%81%EC%84%A0.png'),
   new Source('Underbar41', true, 'https://cdn.steemitimages.com/DQmbPovzN6cdnS1Yu5hUV258DRg42rSLVWsL5YGm4SuHAuJ/%EA%B5%AC%EB%B6%84%EC%84%A0_%EC%A7%A7%EC%9D%80%EB%B9%88%EC%A7%81%EC%84%A0.png')
 ];
-

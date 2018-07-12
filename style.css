@@ -8,3 +8,7 @@
       padding:0.4em 0.5em 0.4em;
       margin:3px;
   }
+
+  .ui.table tr td{
+      word-break: break-all;
+  }
