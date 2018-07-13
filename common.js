@@ -23,3 +23,30 @@ addAtSign = (str) => {
     else return str;
 }
 
+// Active Last Active Page
+let lastPage = localStorage.getItem(CURR_ACTIVE_PAGE);
+if(lastPage){
+    document.querySelector('.' + lastPage).classList.add('active');
+    document.getElementById(lastPage).classList.add('active');
+}
+
+// Accordion Design Controller
+let accordionBtns = document.getElementsByClassName('accordionTitle');
+
+// Accordion Button Event
+for(let i=0; i<accordionBtns.length; i++){
+    accordionBtns[i].addEventListener('click', () => {
+        if(accordionBtns[i].classList.contains('active')){
+            accordionBtns[i].classList.remove('active');
+            document.getElementById(accordionBtns[i].getAttribute('val')).classList.remove('active');
+            localStorage.setItem(CURR_ACTIVE_PAGE, '');
+        }else{
+            document.querySelectorAll('.ui.accordion .title').forEach((e) => e.classList.remove('active'));
+            document.querySelectorAll('.ui.accordion .content').forEach((e) => e.classList.remove('active'));
+            
+            accordionBtns[i].classList.add('active');
+            document.getElementById(accordionBtns[i].getAttribute('val')).classList.add('active');
+            localStorage.setItem(CURR_ACTIVE_PAGE, accordionBtns[i].getAttribute('val'));
+        }
+    });
+}

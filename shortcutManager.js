@@ -56,6 +56,7 @@ document.getElementById('removeUserShortcut').addEventListener('click', v => {
   let tmp = addAtSign(document.getElementById('userID').value);
   let index = userShortcutList.indexOf(tmp);
   userShortcutList.splice(index, 1);
+  localStorage.setItem(STORAGE_USER_LIST, JSON.stringify(userShortcutList));
 
   let shortcutBtns = document.getElementsByClassName('shortcut');
   for(let i=0; i<shortcutBtns.length; i++){

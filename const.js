@@ -1,6 +1,7 @@
 // Global Vars
 const STORAGE_IMAGE_LIST = 'underBarList';      // localstorage imagelist key
 const STORAGE_USER_LIST = 'userShortcutList';   // localstorage user Shortcut key
+const CURR_ACTIVE_PAGE = 'currActivePage';      // Current Active Page
 
 // Steem Condensor Site List
 const sites = [
