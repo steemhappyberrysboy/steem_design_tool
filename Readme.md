@@ -2,31 +2,68 @@
 https://github.com/steemhappyberrysboy/steem_design_tool
 
 ### New Projects
-- What is the project about?
-
-Project name is [Steem Markdown Design Tool(Chrome Extension)](https://chrome.google.com/webstore/search/steem%20markdown)
+Project name is [Steem Tools(Chrome Extension)](https://chrome.google.com/webstore/search/steem%20markdown)
 ![](https://cdn.steemitimages.com/DQmcwM4AniPYZ2KfWxfeEAKHhU5WPndQ6yhNk2jAT6Uffdh/image.png)
 <br>
 ##### It is a chrome extension that makes it easy to paste Image/HTML/Markdown when posting.
 
 You can save the Image URLs, GIF,  HTML and Markdown to your Chrome extension and paste them at any time when posting.
 <br>
-<center><h3>How to use</h3>https://steemitimages.com/80x0/https://cdn.steemitimages.com/DQmeBM8uYHoA6vNfhKWffgTb2GsuB4iBZwWWV4hESwi4gTg/border_05.png</center><br>
-1. Copy the url of the image you want to register (GIF, emoji, HTML, etc.).
-2. Click the Steem Markdown Design Tool installed in the top right corner of Chrome.
-3. Paste the url of the image you just copied into **Input Your Src** and click the **Add** button on the right.
-4. If you open it again, you can see the image added just before.
-5. If you want to delete the registered image, click the **Del** button.
-6. If you click the Init button, it returns to the initial installation state.
-7. There are basically 41 underline images registered.(made by @yani98, @newbijohn)
-<br>
 
-<center><h3>Usage when posting</h3>https://steemitimages.com/80x0/https://cdn.steemitimages.com/DQmeBM8uYHoA6vNfhKWffgTb2GsuB4iBZwWWV4hESwi4gTg/border_05.png</center><br>
-1. Go to the posting page.(Available only in steemit.com, steemkr.com and busy.org) 
-(If you want to work on other sites, please contact us.)
-2. Click the **Steem Markdown Design Tool** installed in the top right corner of Chrome.
-3. If you click Add on the right side of the image you want to add, the content will be added to the posting bottom.
 <br>
+<center><h3>Change  Design</h3>https://steemitimages.com/80x0/https://cdn.steemitimages.com/DQmeBM8uYHoA6vNfhKWffgTb2GsuB4iBZwWWV4hESwi4gTg/border_05.png
+</center>
+
+- Add open source UI component [**Semantic-ui**](https://semantic-ui.com/)
+- Semantic-UI is very simple and easy to use.
+```
+// Sample Design
+// Simple Button 
+<div class="ui button">Follow</div>
+```
+
+![image.png](https://ipfs.busy.org/ipfs/QmQRw91C6ewVBDQ76skGBZN8owwBWW7Rp7ANAVzhEuqiSY)
+
+
+```
+//Icon Button
+<div class="ui labeled button" tabindex="0">
+  <div class="ui button">
+    <i class="heart icon"></i> Like
+  </div>
+  <a class="ui basic label">
+    2,048
+  </a>
+</div>
+
+```
+![image.png](https://ipfs.busy.org/ipfs/QmZPUQ6da9FcUGYAdaaTgsDP1joUAvrersMGS7xg7ngNZD)
+
+- The design has been changed as follows.
+
+### Before 
+![image.png](https://ipfs.busy.org/ipfs/QmU75NUgs1rsiyWaf7R48KuCb985Fub5Ae8kDvdUwMb3RW)
+
+### After
+![image.png](https://ipfs.busy.org/ipfs/QmU6C82dRSyT2VsFnHuESvj1QooUDT7HQycbCCYpsSg2gE)
+
+- I made it an accordion type to add more features  in the future.
+
+![steemtool4.gif](https://ipfs.busy.org/ipfs/QmdyYz9zCkzKSLmdapiMy2RJaae51bfVSBmEYgbCeBohkN)
+<br>
+![steemtool3.gif](https://ipfs.busy.org/ipfs/QmPBubtcQ7Xd9UVSFW2MLjaQq6XiUXd2WaSjiPvr5R4rtt)
+
+
+<br>
+<center><h3>2. User Shortcuts</h3>https://steemitimages.com/80x0/https://cdn.steemitimages.com/DQmeBM8uYHoA6vNfhKWffgTb2GsuB4iBZwWWV4hESwi4gTg/border_05.png
+</center>
+
+- Add user shortcut function.
+- Enter the user ID you want to register as a shortcut in **Input @ID**
+- The ID is added to the lower container
+- Click the ID button to go to the user's page
+
+![steemtool5.gif](https://ipfs.busy.org/ipfs/QmaFh5b7UXmDhpFbXG3n9HemLqCKZg9Vj1GgHjNukUJtd3)
 
 - Technology Stack
 1. Chrome Extension
@@ -48,3 +85,11 @@ https://github.com/steemhappyberrysboy
 
 ### License
 MIT
+
+
+
+
+
+
+
+
