@@ -24,6 +24,19 @@
                 
                 <table class="ui olive table" id="shortcutList"></table>
             </div>
+            <div class="title accordionTitle tagShortcut" val="tagShortcut">
+                <i class="dropdown icon"></i>
+                Tag Shortcuts
+            </div>
+            <div id="tagShortcut" class="content">
+                <div class="ui input">
+                    <input type="text" id="tagID" placeholder="Input Tag" />
+                </div>
+                <div class="ui primary button" id="addTagShortcut">Add</div>
+                <div class="ui orange button" id="removeTagShortcut">Del</div>
+                
+                <table class="ui olive table" id="tagShortcutList"></table>
+            </div>
             <div class="title accordionTitle srcManager" val="srcManager">
                 <i class="dropdown icon"></i>
                 Image/HTML Manager
@@ -68,5 +81,6 @@
 <script src="const.js"></script>
 <script src="common.js"></script>
 <script src="srcManager.js"></script>
+<script src="tagShortcutManager.js"></script>
 <script src="shortcutManager.js"></script>
 </html>

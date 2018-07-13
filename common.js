@@ -19,6 +19,7 @@ getItemIndex = (name) => {
 * @return str string with atsign
 */
 addAtSign = (str) => {
+    str = str.trim();
     if(str && str.substr(0, 1) != "@") return "@" + str;
     else return str;
 }
