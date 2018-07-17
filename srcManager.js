@@ -42,25 +42,6 @@ srcList.forEach(v =>{
                                                     .replace(/{{src}}/g, v.getSrc()));
 });
 
-
-// ============ Add Events ===================
-// Site Textarea Selector
-let siteSelector = '';
-let currContext = '';
-
-/**
-* Set Textarea Selector from chrome tabs
-* @param tab chrometab
-*/
-chrome.tabs.getSelected(null, (tab) => {
-  sites.forEach(v => {
-    if(tab.url.indexOf(v.site) > -1) {
-      currContext = v.context;
-      siteSelector = v.textareaSelector;
-    }
-  });
-});
-
 /**
 * Initial Source Button Event
 */

@@ -51,3 +51,21 @@ for(let i=0; i<accordionBtns.length; i++){
         }
     });
 }
+
+// Set Current Site
+// Site Textarea Selector
+let siteSelector = "document.getElementsByClassName('upload-enabled')[0]";
+let currContext = 'https://steemit.com/';
+
+/**
+* Set Textarea Selector from chrome tabs
+* @param tab chrometab
+*/
+chrome.tabs.getSelected(null, (tab) => {
+  sites.forEach(v => {
+    if(tab.url.indexOf(v.site) > -1) {
+      currContext = v.context;
+      siteSelector = v.textareaSelector;
+    }
+  });
+});
