@@ -32,7 +32,6 @@ trFormat += '<div style="float:right;" class="ui circular medium green icon butt
 trFormat += '</td>';
 trFormat += '<td class="trView">{{view}}</td></tr>';
 
-// Image Table Element
 let eleTable = document.getElementById('underlist');
 
 // Insert Image <TR> HTML
@@ -89,10 +88,6 @@ addClick = (e) => {
   let src = e.target.parentElement.getAttribute('src');
   let itemIdx = getItemIndex(e.target.parentElement.getAttribute('name'));
   let script = srcList[itemIdx].isImage ? '![](' + src + ')' : src;
-
-// change clipboard copy
-//   const defaultScript = "javascript:function a(){let area={{textarea}};area.blur(); area.value=area.value + '{{src}}'; area.focus();}a();";
-
   let clipboard = document.getElementById('clipboard');
   clipboard.style.display = 'block';
   clipboard.value = script;
@@ -103,8 +98,6 @@ addClick = (e) => {
   let copied = document.getElementById('copied');
   copied.style.display = 'inline-block';
   setTimeout((() => copied.style.display = 'none'), 1500);
-//   chrome.tabs.executeScript(null, {code:defaultScript.replace(/{{textarea}}/g, siteSelector).replace(/{{src}}/g, script)});
-//   window.close();
 }
 
 /**
@@ -122,12 +115,12 @@ delClick = (e) => {
 }
 
 /**
-* Add EventListener
+* Add EventListener Each Button
 */
 document.addEventListener('DOMContentLoaded', () => {
   let addBtns = document.getElementsByClassName('addBtn');
   let delBtns = document.getElementsByClassName('delBtn');
-  for (let i = 0; i < addBtns.length; i++) {
+  for (let i = 0; i < addBtns.length; i+=1) {
     addBtns[i].addEventListener('click', addClick);
     delBtns[i].addEventListener('click', delClick);
   }

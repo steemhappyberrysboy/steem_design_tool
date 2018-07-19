@@ -4,8 +4,8 @@
 * @return Number Item Index(Not exist return -1)
 */
 getItemIndex = (name) => {
-    for(let i=0; i<srcList.length; i++){
-      if(srcList[i].getName() == name){
+    for(let i=0; i<srcList.length; i+=1){
+      if(srcList[i].getName() === name){
         return i;
       }
     }
@@ -24,7 +24,7 @@ addAtSign = (str) => {
     else return str;
 }
 
-// Active Last Active Page
+// Set Active page Lastest was actived
 let lastPage = localStorage.getItem(CURR_ACTIVE_PAGE);
 if(lastPage){
     document.querySelector('.' + lastPage).classList.add('active');
@@ -35,7 +35,7 @@ if(lastPage){
 let accordionBtns = document.getElementsByClassName('accordionTitle');
 
 // Accordion Button Event
-for(let i=0; i<accordionBtns.length; i++){
+for(let i=0; i<accordionBtns.length; i+=1){
     accordionBtns[i].addEventListener('click', () => {
         if(accordionBtns[i].classList.contains('active')){
             accordionBtns[i].classList.remove('active');
@@ -52,8 +52,8 @@ for(let i=0; i<accordionBtns.length; i++){
     });
 }
 
-// Set Current Site
-// Site Textarea Selector
+// Set Default Current Site
+// Set Default Site Textarea Selector
 let siteSelector = "document.getElementsByClassName('upload-enabled')[0]";
 let currContext = 'https://steemit.com/';
 

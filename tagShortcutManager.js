@@ -1,5 +1,3 @@
-
-
 // ================== Tag Shortcut Function ==========================
 // Shortcut List
 let tagShortcutList = [];
@@ -9,13 +7,12 @@ if(!tagShortcutList){
   tagShortcutList = [];
 }
 
-// Get Shortcut Table Element
 let tagShortcutTable = document.getElementById('tagShortcutList');
 
-// Shortcut <TR> Format
+// Shortcut <Tdiv> Format
 const tagShortcutFormat = '<div style="margin:5px;" class="ui small teal basic button tagShortcutitem">{{id}}</div>';
 
-// Insert Shortcut <TR> HTML into Shortcut Table
+// Append Shortcut <div> HTML into Shortcut Table
 tagShortcutList.forEach(v =>{
   tagShortcutTable.insertAdjacentHTML('beforeend', tagShortcutFormat.replace(/{{id}}/g, v));
 });
@@ -46,7 +43,6 @@ addTagShortcut = () => {
   shortcutBtns[shortcutBtns.length - 1].addEventListener('click', goTagPageClick);
 }
 
-// Add Tag Button Click Event
 document.getElementById('addTagShortcut').addEventListener('click', addTagShortcut);
 
 /**
@@ -59,8 +55,8 @@ document.getElementById('removeTagShortcut').addEventListener('click', v => {
   localStorage.setItem(STORAGE_TAG_LIST, JSON.stringify(tagShortcutList));
 
   let shortcutBtns = document.getElementsByClassName('tagShortcutitem');
-  for(let i=0; i<shortcutBtns.length; i++){
-    if(shortcutBtns[i].innerHTML == tmp){
+  for(let i=0; i<shortcutBtns.length; i+=1){
+    if(shortcutBtns[i].innerHTML === tmp){
       shortcutBtns[i].remove();
       break;
     }
@@ -75,7 +71,7 @@ document.getElementById('removeTagShortcut').addEventListener('click', v => {
 * @param e event
 */
 document.getElementById('tagID').addEventListener('keypress', (v, e) =>{
-  if(v.keyCode == 13){
+  if(v.keyCode === 13){
     addTagShortcut();
   }
 });
@@ -92,7 +88,7 @@ goTagPageClick = (e) => {
 // Add Event to Shortcut Buttons
 document.addEventListener('DOMContentLoaded', () => {
   let shortcutBtns = document.getElementsByClassName('tagShortcutitem');
-  for(let i=0; i<shortcutBtns.length; i++){
+  for(let i=0; i<shortcutBtns.length; i+=1){
     shortcutBtns[i].addEventListener('click', goTagPageClick);
   }
 });

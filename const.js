@@ -2,7 +2,7 @@
 const STORAGE_IMAGE_LIST = 'underBarList';      // localstorage imagelist key
 const STORAGE_USER_LIST = 'userShortcutList';   // localstorage user Shortcut key
 const STORAGE_TAG_LIST = 'tagShortcutList';     // localstorage tag shortcut key
-const CURR_ACTIVE_PAGE = 'currActivePage';      // Current Active Page
+const CURR_ACTIVE_PAGE = 'currActivePage';      // localstorage lastest active page key
 
 // Steem Condensor Site List
 const sites = [
