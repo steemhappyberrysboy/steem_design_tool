@@ -12,3 +12,7 @@
   .ui.table tr td{
       word-break: break-all;
   }
+
+  .ui.table .trView{
+      margin-top:30px;
+  }

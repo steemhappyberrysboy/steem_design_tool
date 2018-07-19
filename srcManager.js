@@ -7,16 +7,22 @@ let srcList = [];
 let getLocalItems = localStorage.getItem(STORAGE_IMAGE_LIST);
 
 if(getLocalItems){
-  let jsonList = JSON.parse(getLocalItems);
-  jsonList.forEach((v, idx) => {
-    if(v.name){
-        srcList.push(new Source(v.name, v.isImage, v.src));
-    }else{
-        // 1.1.4 previous version conversion
-        srcList.push(new Source('No' + (idx+1), true, v));
-    }
-  });
-  localStorage.setItem(STORAGE_IMAGE_LIST, JSON.stringify(srcList));
+  try{
+    let jsonList = JSON.parse(getLocalItems);
+    jsonList.forEach((v, idx) => {
+      if(v.name){
+          srcList.push(new Source(v.name, v.isImage, v.src));
+      }else{
+          // 1.1.4 previous version conversion
+          srcList.push(new Source('No' + (idx+1), true, v));
+      }
+    });
+    localStorage.setItem(STORAGE_IMAGE_LIST, JSON.stringify(srcList));
+  }catch(e){
+    // Set Default SrcList
+    srcList = defaultSrcList;
+    localStorage.setItem(STORAGE_IMAGE_LIST, JSON.stringify(srcList));
+  }
 }else{
   // Set Default SrcList
   srcList = defaultSrcList;
@@ -97,7 +103,9 @@ addClick = (e) => {
 
   let copied = document.getElementById('copied');
   copied.style.display = 'inline-block';
-  setTimeout((() => copied.style.display = 'none'), 1500);
+
+  // Apply Animation
+  $('#copied').animateCss('flip', (() => (setTimeout(copied.style.display = 'none'), 3000)));
 }
 
 /**
