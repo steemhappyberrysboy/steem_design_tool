@@ -31,26 +31,33 @@ if(lastPage){
     document.getElementById(lastPage).classList.add('active');
 }
 
-// Accordion Design Controller
 let accordionBtns = document.getElementsByClassName('accordionTitle');
 
 // Accordion Button Event
 for(let i=0; i<accordionBtns.length; i+=1){
     accordionBtns[i].addEventListener('click', () => {
         if(accordionBtns[i].classList.contains('active')){
-            accordionBtns[i].classList.remove('active');
-            document.getElementById(accordionBtns[i].getAttribute('val')).classList.remove('active');
             localStorage.setItem(CURR_ACTIVE_PAGE, '');
         }else{
-            document.querySelectorAll('.ui.accordion .title').forEach((e) => e.classList.remove('active'));
-            document.querySelectorAll('.ui.accordion .content').forEach((e) => e.classList.remove('active'));
-            
-            accordionBtns[i].classList.add('active');
-            document.getElementById(accordionBtns[i].getAttribute('val')).classList.add('active');
             localStorage.setItem(CURR_ACTIVE_PAGE, accordionBtns[i].getAttribute('val'));
         }
     });
 }
+
+// Add Shortcut pages in Header
+document.getElementById('showShortcutPage').addEventListener('click', (e) => {
+    let divFormat = '<div class="topShortCutDiv" style="width:100%;"></div>'
+    document.querySelector('.Header').insertAdjacentHTML('beforeend', '<div style="width:100%;border:2px solid #00f;">test</div>');
+    document.querySelector('.App__content').style.marginTop = '100px';
+    
+    if(e.target.checked){
+        chrome.tabs.executeScript({
+            code: ''
+        });
+    }else{
+
+    }
+});
 
 // Set Default Current Site
 // Set Default Site Textarea Selector
@@ -68,4 +75,35 @@ chrome.tabs.getSelected(null, (tab) => {
       siteSelector = v.textareaSelector;
     }
   });
+});
+
+// Apply Semantic-ui accordion design 
+$('.ui.accordion').accordion();
+
+// Animate.css extend in Jquery 
+$.fn.extend({
+  animateCss: function(animationName, callback) {
+    var animationEnd = (function(el) {
+      var animations = {
+        animation: 'animationend',
+        OAnimation: 'oAnimationEnd',
+        MozAnimation: 'mozAnimationEnd',
+        WebkitAnimation: 'webkitAnimationEnd',
+      };
+
+      for (var t in animations) {
+        if (el.style[t] !== undefined) {
+          return animations[t];
+        }
+      }
+    })(document.createElement('div'));
+
+    this.addClass('animated ' + animationName).one(animationEnd, function() {
+      $(this).removeClass('animated ' + animationName);
+
+      if (typeof callback === 'function') callback();
+    });
+
+    return this;
+  },
 });

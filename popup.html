@@ -5,10 +5,15 @@
 </head>
 <body>
     <div style="width:500px!important;min-height:700px; " class="ui container">
-        <div class="ui black button" id="copied" style="display:none;position:fixed;top:10px;right:15px;z-index:999;">Copied!!</div>
+        <div id="copied" style="display:none;position:fixed;top:10px;right:15px;z-index:999;font-size:1.5rem;font-weight:bold;color:blueviolet;">Copied!!</div>
 
         <center><h1>Steemit Tools</h1></center>
         <br>
+
+        <div class="ui toggle checkbox" style="display:none;">
+            <input type="checkbox" name="public" id="showShortcutPage">
+            <label>Show Shortcuts in Page</label>
+        </div>
 
         <div class="ui styled accordion">
             <div class="title accordionTitle userShortcut" val="userShortcut">
@@ -76,7 +81,11 @@
 </body>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.css">
 <link rel="stylesheet" href="style.css">
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"> 
+<script src="thirdParty/jquery3.3.1.min.js"></script>
+<script src="thirdParty/semantic.min.js"></script>
+<script src="thirdParty/showdown.min.js"></script>
+<script src="thirdParty/steemjs.min.js"></script>
 <script src="classes.js"></script>
 <script src="const.js"></script>
 <script src="common.js"></script>
