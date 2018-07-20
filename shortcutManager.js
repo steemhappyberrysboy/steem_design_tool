@@ -12,10 +12,15 @@ let shortcutTable = document.getElementById('shortcutList');
 // Shortcut Design Format
 const shortcutFormat = '<div style="margin:5px;" class="ui small teal basic button shortcut">{{id}}</div>';
 
-// Insert Shortcut HTML into Shortcut Container
-userShortcutList.forEach(v =>{
-  shortcutTable.insertAdjacentHTML('beforeend', shortcutFormat.replace(/{{id}}/g, v));
-});
+refresh = () => {
+  // Insert Shortcut HTML into Shortcut Container
+  shortcutTable.innerHTML = '';
+  userShortcutList.forEach(v =>{
+    shortcutTable.insertAdjacentHTML('beforeend', shortcutFormat.replace(/{{id}}/g, v));
+  });
+}
+
+refresh();
 
 /**
 * Add User Shortcut Function and Save Localstorage
@@ -44,6 +49,14 @@ addUserShortcut = () => {
 }
 
 document.getElementById('addUserShortcut').addEventListener('click', addUserShortcut);
+
+document.getElementById('sortABC').addEventListener('click', () => {
+  if(!confirm('Do you want to sort IDs in ABC order? ')) return;
+  userShortcutList.sort();
+  localStorage.setItem(STORAGE_USER_LIST, JSON.stringify(userShortcutList));
+
+  refresh();
+});
 
 /**
 * Remove User Button Click Event
