@@ -92,3 +92,34 @@ document.addEventListener('DOMContentLoaded', () => {
     shortcutBtns[i].addEventListener('click', goUserPageClick);
   }
 });
+
+document.getElementById('userDetailBtn').addEventListener('click', () => {
+  // Get User Info from Steemjs API
+  steem.api.getAccounts(userShortcutList.map(v => v.replace(/@/g, '')), function(err, response){
+    if(err){
+      alert('Steem API Error');
+      console.log(err);
+    }else{
+      console.log(response);
+    }
+
+    let userInfoHtmlFormat = [];
+
+    response.forEach((v, i) => {
+      var metadata = v.json_metadata ? JSON.parse(v.json_metadata) : '';
+      console.log(metadata);
+      userInfoHtmlFormat.push('<div class="ui card shortcut"><div class="image">');
+      userInfoHtmlFormat.push('<img src="{{src}}">'.replace(/{{src}}/g, metadata ? metadata.profile.profile_image : 'https://semantic-ui.com/images/wireframe/image.png'));
+      userInfoHtmlFormat.push('</div><div class="content">');
+      userInfoHtmlFormat.push('<div class="header">{{name}}</div>'.replace(/{{name}}/g, v.name));
+      userInfoHtmlFormat.push('<div class="description">{{desc}}</div></div>'.replace(/{{desc}}/g, metadata ? metadata.profile.about : ''));
+    });
+
+    shortcutTable.insertAdjacentHTML('beforeend', userInfoHtmlFormat.join(''));
+
+    let shortcutBtns = document.getElementsByClassName('shortcut');
+    shortcutBtns[shortcutBtns.length - 1].addEventListener('click', goUserPageClick);
+  });
+});
+
+
