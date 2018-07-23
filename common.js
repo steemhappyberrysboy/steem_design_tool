@@ -3,9 +3,9 @@
 * @param name A  String to be found in the list
 * @return Number Item Index(Not exist return -1)
 */
-getItemIndex = (name) => {
-    for(let i=0; i<srcList.length; i+=1){
-      if(srcList[i].getName() === name){
+getItemIndex = (list, name) => {
+    for(let i=0; i<list.length; i+=1){
+      if(list[i].getName() === name){
         return i;
       }
     }
