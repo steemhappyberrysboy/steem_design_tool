@@ -12,7 +12,7 @@
 !function(storageUserKey, storageDetailValue, userTable, inputId, addBtn, delBtn, sortBtn, chkDetail){
   // Define and Set Shortcut List from Localstorage
   let userShortcutList = [];
-  let getStorageUserList = localStorage.getItem(storageUserKey);
+  const getStorageUserList = localStorage.getItem(storageUserKey);
 
   if(getStorageUserList){
     userShortcutList = JSON.parse(getStorageUserList);
@@ -30,7 +30,7 @@
   * Add User Shortcut Function and Save Localstorage
   */
   function addUserShortcut() {
-    let userid = addAtSign(inputId.value);
+    const userid = addAtSign(inputId.value);
     if(!userid) {
       alert('Please Input Userid');
       return;
@@ -71,12 +71,12 @@
   * Remove User Button Click Event
   */
   delBtn.addEventListener('click', v => {
-    let tmp = addAtSign(inputId.value);
-    let index = userShortcutList.indexOf(tmp);
+    const tmp = addAtSign(inputId.value);
+    const index = userShortcutList.indexOf(tmp);
     userShortcutList.splice(index, 1);
     localStorage.setItem(storageUserKey, JSON.stringify(userShortcutList));
 
-    let shortcutBtns = document.getElementsByClassName('shortcut');
+    const shortcutBtns = document.getElementsByClassName('shortcut');
     for(let i=0; i<shortcutBtns.length; i+=1){
       if(shortcutBtns[i].getAttribute('id') == tmp){
         shortcutBtns[i].remove();
@@ -102,7 +102,7 @@
   * Go Target User Page
   */
   function goUserPageClick(e){
-    let userId = e.target.innerHTML;
+    const userId = e.target.innerHTML;
     chrome.tabs.executeScript(null, {code:'location.href="' + currContext + userId + '"'});
     window.close();
   }
@@ -118,7 +118,7 @@
   function refresh() {
     if(userShortcutList.length == 0) return; 
 
-    let shortcutTable = userTable;
+    const shortcutTable = userTable;
     shortcutTable.innerHTML = '';
 
     if(chkDetail.checked){
@@ -131,7 +131,7 @@
           console.log(response);
         }
 
-        let userInfoHtmlFormat = [];
+        const userInfoHtmlFormat = [];
         response.forEach((v, i) => {
           let metadata;
           try{
@@ -179,7 +179,7 @@
         shortcutTable.insertAdjacentHTML('beforeend', shortcutFormat.replace(/{{id}}/g, v));
       });
 
-      let shortcutBtns = document.getElementsByClassName('shortcut');
+      const shortcutBtns = document.getElementsByClassName('shortcut');
       for(let i=0; i<shortcutBtns.length; i+=1){
         shortcutBtns[i].addEventListener('click', goUserPageClick);
       }

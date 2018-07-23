@@ -9,11 +9,11 @@
  */
 !function(storageSrcKey, defaultSrc, srcTable, inputName, chkImage, inputSrc){
   let srcList = [];
-  let getLocalItems = localStorage.getItem(storageSrcKey);
+  const getLocalItems = localStorage.getItem(storageSrcKey);
 
   if(getLocalItems){
     try{
-      let jsonList = JSON.parse(getLocalItems);
+      const jsonList = JSON.parse(getLocalItems);
       jsonList.forEach((v, idx) => {
         if(v.name){
             srcList.push(new Source(v.name, v.isImage, v.src));
@@ -34,14 +34,14 @@
     localStorage.setItem(storageSrcKey, JSON.stringify(srcList));
   }
 
-  let trFormat = [];
+  const trFormat = [];
   trFormat.push('<tr><td class="trName"><div style="font-size:1.5rem;float:left;">{{name}}</div>');
   trFormat.push('<div style="float:right;" class="ui circular medium orange icon button delBtn" name="{{name}}" src="{{src}}"><i class="icon trash alternate outline"></i></div>');
   trFormat.push('<div style="float:right;" class="ui circular medium green icon button addBtn" name="{{name}}" src="{{src}}"><i class="icon copy outline"></i></div>');
   trFormat.push('</td>');
   trFormat.push('<td class="trView">{{view}}</td></tr>');
 
-  let eleTable = srcTable;
+  const eleTable = srcTable;
 
   // Insert Image <TR> HTML
   srcList.forEach(v =>{
@@ -63,9 +63,9 @@
   * Add Manual Source Button Event
   */
   document.getElementById('addManualSrc').addEventListener('click', v =>{
-    let name = inputName.value.trim();
-    let isImage = chkImage.checked;
-    let src = inputSrc.value;
+    const name = inputName.value.trim();
+    const isImage = chkImage.checked;
+    const src = inputSrc.value;
 
     if(!name || !src) {
       alert('Please Input Name and Source');
@@ -93,8 +93,8 @@
   * Add EventListener Each Button
   */
  document.addEventListener('DOMContentLoaded', () => {
-    let addBtns = document.getElementsByClassName('addBtn');
-    let delBtns = document.getElementsByClassName('delBtn');
+    const addBtns = document.getElementsByClassName('addBtn');
+    const delBtns = document.getElementsByClassName('delBtn');
     for (let i = 0; i < addBtns.length; i+=1) {
       addBtns[i].addEventListener('click', addClick);
       delBtns[i].addEventListener('click', delClick);
@@ -106,17 +106,17 @@
   * @param e add button click event
   */
   function addClick(e) {
-    let src = e.target.parentElement.getAttribute('src');
-    let itemIdx = getItemIndex(srcList, e.target.parentElement.getAttribute('name'));
-    let script = srcList[itemIdx].isImage ? '![](' + src + ')' : src;
-    let clipboard = document.getElementById('clipboard');
+    const src = e.target.parentElement.getAttribute('src');
+    const itemIdx = getItemIndex(srcList, e.target.parentElement.getAttribute('name'));
+    const script = srcList[itemIdx].isImage ? '![](' + src + ')' : src;
+    const clipboard = document.getElementById('clipboard');
     clipboard.style.display = 'block';
     clipboard.value = script;
     clipboard.select();
     document.execCommand('copy');
     clipboard.style.display = 'none';
 
-    let copied = document.getElementById('copied');
+    const copied = document.getElementById('copied');
     copied.style.display = 'inline-block';
 
     // Apply Animation
@@ -128,7 +128,7 @@
   * @param e del button click event
   */
   function delClick(e){
-    let index = getItemIndex(srcList, e.target.parentElement.getAttribute('name'));
+    const index = getItemIndex(srcList, e.target.parentElement.getAttribute('name'));
     
     if(index < 0) return;
 

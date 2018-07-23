@@ -26,7 +26,7 @@
   * Add Tag Shortcut Function and Save Localstorage
   */
   function addTagShortcut() {
-    let tagid = inputid.value.trim();
+    const tagid = inputid.value.trim();
     if(!tagid) {
       alert('Please Input Tagid');
       return;
@@ -48,8 +48,8 @@
   * Remove Tag Button Click Event
   */
   delbtn.addEventListener('click', v => {
-    let tmp = inputid.value.trim();
-    let index = tagShortcutList.indexOf(tmp);
+    const tmp = inputid.value.trim();
+    const index = tagShortcutList.indexOf(tmp);
     tagShortcutList.splice(index, 1);
     localStorage.setItem(storagekey, JSON.stringify(tagShortcutList));
 
@@ -70,7 +70,7 @@
   * Go Target Tag Page
   */
   function goTagPageClick(e){
-    let tagid = e.target.innerHTML;
+    const tagid = e.target.innerHTML;
     chrome.tabs.executeScript(null, {code:'location.href="' + currContext + 'trending/' + tagid + '"'});
     window.close();
   }
@@ -83,7 +83,7 @@
       table.insertAdjacentHTML('beforeend', tagShortcutFormat.replace(/{{id}}/g, v));
     });
 
-    let shortcutBtns = document.getElementsByClassName('tagShortcutitem');
+    const shortcutBtns = document.getElementsByClassName('tagShortcutitem');
     for(let i=0; i<shortcutBtns.length; i+=1){
       shortcutBtns[i].addEventListener('click', goTagPageClick);
     }
